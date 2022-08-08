@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  # redis:
+  #   image: redis:alpine
+  #   ports:
+  #     - "6379:6379"
+
+  db:
+    image: postgres:alpine
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+
+  # rabbitmq:
+  #   image: rabbitmq:management-alpine
+  #   environment:
+  #     - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+  #     - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+  #   ports:
+  #     - "5672:5672"
+  #     - "15672:15672"
+
+  # celery:
+  #   image: ${BACKEND_IMAGE}:${BACKEND_TAG}
+  #   restart: unless-stopped
+  #   command: [ "run-celery-worker" ]
+  #   env_file:
+  #     - .env.app
+  #   depends_on:
+  #     - app
+
+  # celery-beat:
+  #   image: ${BACKEND_IMAGE}:${BACKEND_TAG}
+  #   restart: unless-stopped
+  #   command: [ "run-celery-beat" ]
+  #   env_file:
+  #     - .env.app
+  #   depends_on:
+  #     - app
+
+  app:
+    image: ${BACKEND_IMAGE}:${BACKEND_TAG}
+    restart: unless-stopped
+    depends_on:
+      - db
+      # - rabbitmq
+      # - redis
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env.app
+
