@@ -15,11 +15,31 @@ $ cp .env.app.example .env
 $ vi .env.app
 ```
 
-## Installtion
-
 ```shell
 # Pull all services images.
 $ docker compose pull
+
+# Start MinIO(S3) service.
+$ docker compose up minio -d
+```
+
+### Setup MinIO(S3) bucket
+
+1. Open [`http://localhost:9090`](http://localhost:9090).
+2. Click `Buckets`, `http://localhost:9090/buckets`.
+3. Click `Create Bucket`, `http://localhost:9090/buckets/add-bucket`.
+4. Key in `Bucket Name` and Click `Create Bucket`.
+5. `$ vi .env.app`, Edit env
+```
+AWS_ACCESS_KEY_ID=${MINIO_ROOT_USER}
+AWS_SECRET_ACCESS_KEY=${MINIO_ROOT_PASSWORD}
+AWS_S3_ENDPOINT_URL=http://minio:9000
+AWS_STORAGE_BUCKET_NAME=${MINIO_BUCKET_NAME}
+```
+
+## Installtion
+
+```shell
 
 # Run all services.
 $ docker compose up -d
