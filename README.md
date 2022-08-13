@@ -11,7 +11,7 @@ $ cp .env.example .env
 $ vi .env
 
 
-$ cp .env.app.example .env
+$ cp .env.app.example .env.app
 $ vi .env.app
 ```
 
