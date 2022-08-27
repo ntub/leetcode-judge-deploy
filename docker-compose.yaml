@@ -68,6 +68,15 @@ services:
     env_file:
       - .env.app
 
+  frontend:
+    image: ${FRONTEND_IMAGE}:${FRONTEND_TAG}
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - "3000:3000"
+
+
 volumes:
   dbdata:
   miniodata:
