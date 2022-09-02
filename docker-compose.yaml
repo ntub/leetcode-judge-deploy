@@ -71,6 +71,9 @@ services:
   frontend:
     image: ${FRONTEND_IMAGE}:${FRONTEND_TAG}
     restart: unless-stopped
+    environment:
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
     depends_on:
       - app
     ports:
